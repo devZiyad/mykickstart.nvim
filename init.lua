@@ -1,13 +1,3 @@
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'c', 'cpp', 'h' },
-  callback = function()
-    vim.opt_local.expandtab = true
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.tabstop = 2
-    vim.opt_local.smartindent = true
-  end,
-})
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
@@ -123,6 +113,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Set proper indent settings for C/C++/header files
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp', 'h' },
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.smartindent = true
   end,
 })
 
@@ -946,6 +947,3 @@ require('lazy').setup({
     },
   },
 })
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
