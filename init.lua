@@ -1,3 +1,13 @@
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp', 'h' },
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.smartindent = true
+  end,
+})
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
@@ -5,6 +15,9 @@ vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+
+-- Set Python 3 provider to custom virtualenv
+vim.g.python3_host_prog = os.getenv 'HOME' .. '/.venvs/neovim/bin/python3'
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -568,7 +581,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -667,6 +680,10 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        c = { 'clang_format' },
+        cpp = { 'clang_format' },
+        h = { 'clang_format' },
+        python = { 'black' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
